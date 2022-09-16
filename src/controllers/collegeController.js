@@ -38,7 +38,7 @@ const createCollege = async function (req, res) {
       return res.status(400).send({ status: false, msg: "Invalid logoLink" });
 
     let savedCollege = await collegeModel.create(collegeData);
-    return res.status(200).send({ status: true, data: savedCollege });
+    return res.status(201).send({ status: true, data: savedCollege });
   } catch (error) {
     return res
       .status(500)
@@ -72,7 +72,6 @@ const getCollegeDetails = async function (req, res) {
        getInterData="please provide intern details"
       }
     let result = {
-      _id: getCollegeData._id,
       name: getCollegeData.name,
       fullName: getCollegeData.fullName,
       logoLink: getCollegeData.logoLink,

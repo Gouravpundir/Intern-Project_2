@@ -21,7 +21,18 @@ const createIntern = async function (req, res) {
         msg: "Name is A Mandatory Field,Please Input Name",
       });
 
+      if(mobile.match([/^[6-9]\d{9}$/])){
+        return res.status(400).send({
+          status: false,
+          msg: "please provide valid mobile number",
+      })
+    }
     if (!email)
+      return res.status(400).send({
+        status: false,
+        msg: "Email is A Mandatory Field,Please Input Email",
+      });
+      if (!email)
       return res.status(400).send({
         status: false,
         msg: "Email is A Mandatory Field,Please Input Email",
@@ -64,7 +75,7 @@ const createIntern = async function (req, res) {
     };
 
     let internDataCreated = await internModel.create(obj);
-    return res.status(201).send({ status: true, data: internDataCreated  });
+    return res.status(201).send({ status: true, data: internDataCreated});
   } catch (error) {
     return res
       .status(500)
