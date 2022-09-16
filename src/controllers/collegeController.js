@@ -17,12 +17,6 @@ const createCollege = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, msg: "CollegeName is A Mandatory Field" });
-    let uniqueCollege = await collegeModel.findOne({ name: collegeData.name });
-    if (uniqueCollege)
-      return res.status(400).send({
-        status: false,
-        msg: "Please Enter A Different College Name,College Already Exists",
-      });
 
     if (!collegeData.fullName)
       return res

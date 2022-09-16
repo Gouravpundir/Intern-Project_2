@@ -32,11 +32,6 @@ const createIntern = async function (req, res) {
         status: false,
         msg: "Email is A Mandatory Field,Please Input Email",
       });
-      if (!email)
-      return res.status(400).send({
-        status: false,
-        msg: "Email is A Mandatory Field,Please Input Email",
-      });
 
     const isEmailAlreadyUsed = await internModel.findOne({ email });
     if (isEmailAlreadyUsed) {
