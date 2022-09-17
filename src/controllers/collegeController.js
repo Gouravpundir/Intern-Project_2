@@ -1,46 +1,24 @@
 const collegeModel = require("../models/collegeModel");
 const internModel = require("../models/internModel");
-const validator = require("validator");
 
 
-// =========================CREATE COLLEGE API===========================//
+// =====================================CREATE COLLEGE API======================================//
 
 const createCollege = async function (req, res) {
-  try {
-    let collegeData = req.body;
-    if (Object.keys(collegeData).length == 0){
-      return res
-        .status(400)
-        .send({ status: false, msg: "Please provide sufficent details in request body" });
+    try {
+    if (req.body && Object.keys(req.body).length > 0) {
+    let college = await collegeModel.create(req.body)
+    res.status(201).send({status:true,data:college})
+    }else{
+    res.status(400).send({ status: false, msg: "Request must contain a valid body"})
     }
-    if (!collegeData.name)
-      return res
-        .status(400)
-        .send({ status: false, msg: "CollegeName is A Mandatory Field" });
-
-    if (!collegeData.fullName)
-      return res
-        .status(400)
-        .send({ status: false, msg: "College FullName Is A Mandatory Field" });
-
-    if (!collegeData.logoLink)
-      return res.status(400).send({
-        status: false,
-        msg: "Please Provide A College LogoLink,Its A Mandatory Field",
-      });
-    if (!validator.isURL(collegeData.logoLink))
-      return res.status(400).send({ status: false, msg: "Invalid logoLink" });
-
-    let savedCollege = await collegeModel.create(collegeData);
-    return res.status(201).send({ status: true, data: savedCollege });
-  } catch (error) {
-    return res
-      .status(500)
-      .send({ status: false, error:error.message });
-  }
+  }catch(error){
+    res.status(500).send({ status: false, msg: error.message })
 };
+}
 
-//========================ROUTE HANDLER FOR GET COLLEGE API==============================//
+//====================================get college=============================================//
+
 
 const getCollegeDetails = async function (req, res) {
   try {
@@ -78,6 +56,8 @@ const getCollegeDetails = async function (req, res) {
       .send({ status: false, error:error.message});
   }
 };
+
+
 
 module.exports.createCollege = createCollege;
 module.exports.getCollegeDetails = getCollegeDetails;

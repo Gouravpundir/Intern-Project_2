@@ -17,9 +17,10 @@ const internSchema = new mongoose.Schema(
     },
     mobile: {
       type: String,
-      required: true,
+      required: "Please provide valid mobile",
       unique: true,
-      trim: true
+      trim: true,
+      match:/^[6-9]\d{9}$/
     },
     collegeId: {
       type: objectId,
